@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
+
 @RestController
 public class UserInfoController {
 
@@ -22,7 +24,7 @@ public class UserInfoController {
     }
 
     @GetMapping("/score")
-    public UserInfoDTO registrationScore(String userName, int age, int score){
+    public UserInfoDTO registrationScore(String userName, int age, int score) throws IOException {
         return userInfoService.registrationScore(userName, age, score);
     }
 
