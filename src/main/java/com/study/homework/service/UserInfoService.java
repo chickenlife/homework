@@ -24,6 +24,8 @@ public class UserInfoService {
     }
 
     public void deleteUserInfo(){
-        userInfoDTO = null;
+        userInfoDTO.setUserName("");
+        userInfoDTO.setAge(0);
+        userInfoDTO.setScore(0);
     }
 }
