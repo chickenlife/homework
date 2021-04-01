@@ -24,12 +24,9 @@ public class UserInfoService {
         return "hello~";
     }
 
-    public UserInfoDTO registrationScore(String userName, int age, int score) throws IOException {
-        userInfoDTO.setUserName(userName);
-        userInfoDTO.setAge(age);
-        userInfoDTO.setScore(score);
+    public String registrationScore(UserInfoDTO userInfoDTO) throws IOException {
         saveObject(); //@PreDestroy?
-        return userInfoDTO;
+        return "result";
     }
 
     public UserInfoDTO selectUserInfo(){

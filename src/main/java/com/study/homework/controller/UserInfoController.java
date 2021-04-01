@@ -2,10 +2,7 @@ package com.study.homework.controller;
 
 import com.study.homework.dto.UserInfoDTO;
 import com.study.homework.service.UserInfoService;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
@@ -24,8 +21,8 @@ public class UserInfoController {
     }
 
     @GetMapping("/score")
-    public UserInfoDTO registrationScore(String userName, int age, int score) throws IOException {
-        return userInfoService.registrationScore(userName, age, score);
+    public String registrationScore(@RequestBody UserInfoDTO userInfoDTO) throws IOException {
+        return userInfoService.registrationScore(userInfoDTO);
     }
 
     @PostMapping("/score")
