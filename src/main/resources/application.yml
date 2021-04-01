@@ -2,3 +2,4 @@ logging:
   level:
     root: INFO
     com.study.homework.service: INFO
+    com.study.homework.controller: INFO

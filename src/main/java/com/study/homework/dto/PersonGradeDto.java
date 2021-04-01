@@ -5,8 +5,8 @@ import lombok.Data;
 import java.io.Serializable;
 
 @Data
-public class UserInfoDTO implements Serializable {
+public class PersonGradeDto implements Serializable {
     private String userName;
     private int age;
-    private int score;
+    private int grade;
 }

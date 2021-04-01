@@ -1,18 +1,17 @@
 package com.study.homework.service;
 
-import com.study.homework.dto.UserInfoDTO;
+import com.study.homework.dto.PersonGradeDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.io.*;
-import java.util.Base64;
 
 @Service
 @Slf4j
 public class UserInfoService {
 
-    UserInfoDTO userInfoDTO = new UserInfoDTO();
+    PersonGradeDto personGradeDto = new PersonGradeDto();
     byte[] serializedUserInfo;
 
     @PostConstruct
@@ -24,25 +23,28 @@ public class UserInfoService {
         return "hello~";
     }
 
-    public String registrationScore(UserInfoDTO userInfoDTO) throws IOException {
-        saveObject(); //@PreDestroy?
-        return "result";
+    public String addUserInfo(PersonGradeDto personGradeDto) throws IOException {
+        log.debug("[service : registrationScore] userInfoDTO={}", personGradeDto);
+        this.personGradeDto = personGradeDto;
+        saveObject(personGradeDto); //@PreDestroy?
+        return "Success, Add UserInfo.";
     }
 
-    public UserInfoDTO selectUserInfo(){
-        return userInfoDTO;
+    public PersonGradeDto selectUserInfo(){
+        return personGradeDto;
     }
 
-    public void deleteUserInfo(){
-        userInfoDTO.setUserName(null);
-        userInfoDTO.setAge(0);
-        userInfoDTO.setScore(0);
+    public String deleteUserInfo(){
+        personGradeDto.setUserName(null);
+        personGradeDto.setAge(0);
+        personGradeDto.setGrade(0);
+        return "Success, Delete UserInfo.";
     }
 
-    public void saveObject() throws IOException {
+    public void saveObject(PersonGradeDto personGradeDto) throws IOException {
         try(ByteArrayOutputStream baos = new ByteArrayOutputStream()){
             try(ObjectOutputStream oos = new ObjectOutputStream(baos)){
-                oos.writeObject(userInfoDTO);
+                oos.writeObject(personGradeDto);
                 serializedUserInfo = baos.toByteArray();
             }
         } catch (IOException e) {
@@ -54,29 +56,40 @@ public class UserInfoService {
     }
 
     public void loadObject() throws IOException {
-        FileInputStream fis = new FileInputStream("c:\\temp\\test.obj");
+        try{
+            FileInputStream fis = new FileInputStream("c:\\temp\\test.obj");
 
-        int readCount;
-        byte[] buffer = new byte[1024];
+            int readCount;
+            byte[] buffer = new byte[1024];
 
-        while((readCount = fis.read(buffer))!=-1){
-            log.debug("read data[{}] is {}",readCount,buffer.toString());
-        }
+            while((readCount = fis.read(buffer))!=-1){
+                log.debug("read data[{}] is {}",readCount,buffer.toString());
+            }
 
-        try {
-            ByteArrayInputStream bais = new ByteArrayInputStream(buffer);
             try {
-                ObjectInputStream ois = new ObjectInputStream(bais);
-                Object objectUserInfo = ois.readObject();
-                userInfoDTO = (UserInfoDTO)objectUserInfo;
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (ClassNotFoundException e) {
+                ByteArrayInputStream bais = new ByteArrayInputStream(buffer);
+                try {
+                    ObjectInputStream ois = new ObjectInputStream(bais);
+                    Object objectUserInfo = ois.readObject();
+                    personGradeDto = (PersonGradeDto)objectUserInfo;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+            } catch (Exception e) {
                 e.printStackTrace();
             }
-        } catch (Exception e) {
+            log.debug("loaded UserInfoDTO is {}", personGradeDto);
+        }catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        log.debug("loaded UserInfoDTO is {}",userInfoDTO);
+    }
+
+    public String modifyUserInfo(PersonGradeDto personGradeDto) {
+        this.personGradeDto.setUserName(personGradeDto.getUserName());
+        this.personGradeDto.setAge(personGradeDto.getAge());
+        this.personGradeDto.setGrade(personGradeDto.getGrade());
+        return "Success, modified UserInfo";
     }
 }
