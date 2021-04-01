@@ -1,5 +1,5 @@
 logging:
   level:
     root: INFO
-    com.study.homework.service: INFO
-    com.study.homework.controller: INFO
+    com.study.homework.day2.service: INFO
+    com.study.homework.day2.controller: INFO

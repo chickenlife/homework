@@ -1,4 +1,4 @@
-package com.study.homework.dto;
+package com.study.homework.day2.dto;
 
 import lombok.Data;
 

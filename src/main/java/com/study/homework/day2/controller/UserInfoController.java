@@ -1,7 +1,7 @@
-package com.study.homework.controller;
+package com.study.homework.day2.controller;
 
-import com.study.homework.dto.PersonGradeDto;
-import com.study.homework.service.UserInfoService;
+import com.study.homework.day2.dto.PersonGradeDto;
+import com.study.homework.day2.service.UserInfoService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,7 +39,7 @@ public class UserInfoController {
     }
 
     @PostMapping("/modify-grade")
-    public String modifyUserInfo(@RequestBody PersonGradeDto personGradeDto){
+    public String modifyUserInfo(@RequestBody PersonGradeDto personGradeDto) throws IOException {
         return userInfoService.modifyUserInfo(personGradeDto);
     }
 }

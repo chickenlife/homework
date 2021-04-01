@@ -1,6 +1,6 @@
-package com.study.homework.service;
+package com.study.homework.day2.service;
 
-import com.study.homework.dto.PersonGradeDto;
+import com.study.homework.day2.dto.PersonGradeDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -86,10 +86,11 @@ public class UserInfoService {
         }
     }
 
-    public String modifyUserInfo(PersonGradeDto personGradeDto) {
+    public String modifyUserInfo(PersonGradeDto personGradeDto) throws IOException {
         this.personGradeDto.setUserName(personGradeDto.getUserName());
         this.personGradeDto.setAge(personGradeDto.getAge());
         this.personGradeDto.setGrade(personGradeDto.getGrade());
+        saveObject(this.personGradeDto);
         return "Success, modified UserInfo";
     }
 }
