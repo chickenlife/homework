@@ -17,8 +17,9 @@ public class UserInfoService {
 
     @PostConstruct
     public void initialize() throws IOException {
-        loadFile();
+        loadObject();
     }
+
     public String hello(){
         return "hello~";
     }
@@ -27,18 +28,7 @@ public class UserInfoService {
         userInfoDTO.setUserName(userName);
         userInfoDTO.setAge(age);
         userInfoDTO.setScore(score);
-
-        try(ByteArrayOutputStream baos = new ByteArrayOutputStream()){
-            try(ObjectOutputStream oos = new ObjectOutputStream(baos)){
-                oos.writeObject(userInfoDTO);
-                serializedUserInfo = baos.toByteArray();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        saveFile(serializedUserInfo);
-        log.debug("serialized UserInfo : {}",Base64.getEncoder().encodeToString(serializedUserInfo));
-
+        saveObject(); //@PreDestroy?
         return userInfoDTO;
     }
 
@@ -52,12 +42,21 @@ public class UserInfoService {
         userInfoDTO.setScore(0);
     }
 
-    public void saveFile(byte[] inputString) throws IOException {
+    public void saveObject() throws IOException {
+        try(ByteArrayOutputStream baos = new ByteArrayOutputStream()){
+            try(ObjectOutputStream oos = new ObjectOutputStream(baos)){
+                oos.writeObject(userInfoDTO);
+                serializedUserInfo = baos.toByteArray();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         FileOutputStream fos = new FileOutputStream("c:\\temp\\test.obj");
-        fos.write(inputString);
+        fos.write(serializedUserInfo);
     }
 
-    public void loadFile() throws IOException {
+    public void loadObject() throws IOException {
         FileInputStream fis = new FileInputStream("c:\\temp\\test.obj");
 
         int readCount;
@@ -67,5 +66,20 @@ public class UserInfoService {
             log.debug("read data[{}] is {}",readCount,buffer.toString());
         }
 
+        try {
+            ByteArrayInputStream bais = new ByteArrayInputStream(buffer);
+            try {
+                ObjectInputStream ois = new ObjectInputStream(bais);
+                Object objectUserInfo = ois.readObject();
+                userInfoDTO = (UserInfoDTO)objectUserInfo;
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        log.debug("loaded UserInfoDTO is {}",userInfoDTO);
     }
 }
