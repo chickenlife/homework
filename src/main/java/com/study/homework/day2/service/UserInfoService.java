@@ -6,6 +6,10 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.io.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 @Slf4j
@@ -19,8 +23,27 @@ public class UserInfoService {
         loadObject();
     }
 
-    public String hello(){
-        return "hello~";
+    public Map<String, String> hello(){
+        Map<String,String> helloMap = new HashMap<>();
+        helloMap.put("test1","data11");
+        helloMap.put("test2","data22");
+        helloMap.put("test3","data33");
+        return helloMap;
+    }
+    public String hello1(){
+        Map<String,String> helloMap = new HashMap<>();
+        helloMap.put("test1","data11");
+        helloMap.put("test2","data22");
+        helloMap.put("test3","data33");
+        return "helloMap is "+helloMap;
+    }
+
+    public List<String> hello2(){
+        List<String> helloList = new ArrayList<>();
+        helloList.add("test1");
+        helloList.add("test2");
+        helloList.add("test3");
+        return helloList;
     }
 
     public String addUserInfo(PersonGradeDto personGradeDto) throws IOException {
