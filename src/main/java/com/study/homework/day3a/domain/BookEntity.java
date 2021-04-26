@@ -28,5 +28,9 @@ public class BookEntity {
     @Temporal(TemporalType.TIMESTAMP)
     @CreationTimestamp
     private Date createAt;
+
+    public void setId(UUID bookId) {
+        this.id = bookId;
+    }
 }
 
