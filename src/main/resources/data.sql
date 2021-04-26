@@ -1,3 +1,4 @@
+/*
 INSERT INTO book (id, name, category, sell_count, create_at) VALUES
 ('7c9649e3-944a-4bfc-a332-e77c3ce517af', '열 번의 산책', '인문', 9000, NOW()),
 ('c164e06d-a57c-4045-a03d-43ce3b33d09a', '숲길', '인문', 12000, NOW()),
@@ -9,3 +10,4 @@ INSERT INTO book (id, name, category, sell_count, create_at) VALUES
 ('d41b537f-3f0b-4d84-9e7f-d33668c4a3bc', '아몬드', '소설', 12000, NOW()),
 ('875125be-c1a4-4496-a7b5-9b2cbf39a2b3', '한국단편소설 40', '소설', 14700, NOW()),
 ('70afb424-7223-42df-9881-96a6284eacc2', '대한민국 요즘 여행', '여행', 16920, NOW());
+ */
